@@ -1,5 +1,4 @@
-# geting started
+# Geting Started
 ---
 
 [DockDockGo](https://duckduckgo.com/)
-![alt - Github](Link of your image)
