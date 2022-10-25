@@ -10,5 +10,5 @@ cd php
 ```javascript
 php -S localhost:8000 -t php
 ```
-**Note**
+**Note:**
 To run it, you must install Zamp Windows program and create a database in phpMyadmin called books_db.
