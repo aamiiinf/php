@@ -4,11 +4,11 @@ Javascript Code:
 ```javascript
 git clone https://github.com/aamiiinf/php.git
 ```
-Javascript Code:
+Next:
 ```javascript
 cd php
 ```
-Javascript Code:
+Next:
 ```javascript
 php -S localhost:8000 -t php
 ```
