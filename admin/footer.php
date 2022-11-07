@@ -1,6 +1,6 @@
 
   <footer class="main-footer text-center">
-    <strong>Copyright &copy; 2022 <a href="https://pscr.ir">PSCR</a></strong>
+    <strong>Copyright &copy; 2022 <a href="https://pscr.ir" target="_blank">PSCR</a></strong>
   </footer>
 
   <!-- Control Sidebar -->

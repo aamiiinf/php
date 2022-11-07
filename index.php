@@ -53,7 +53,7 @@ $book = new Book;
         <div class="row justify-content-center">
             <div class="col-lg-6 text-center">
                 <h2><span>Books</span></h2>
-                <a href="http://localhost:8000/admin/index.php" target="_blank">Go To Admin Page</a>
+                <a href="admin/index.php" target="_blank">Go To Admin Page</a>
             </div>
         </div>
     </div>
@@ -88,7 +88,7 @@ $book = new Book;
     <div class="container">
 
         <div class="credits">
-            Designed by <a href="https://pscr.ir/">PSCR</a>
+            Designed by <a href="https://pscr.ir/" target="_blank">PSCR</a>
         </div>
     </div>
 </footer><!-- End Footer -->

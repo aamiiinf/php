@@ -109,7 +109,7 @@ require_once("header.php");
                     <div class="card-header"><strong>Add New Book</strong> <a href="index.php" class="float-right btn btn-dark btn-sm">Books List<i class="fa fa-fw fa-globe"></i></a></div>
                       <div class="card-body">
                         <div class="col">
-                          <form method="post" action="index.php" dir="ltr>
+                          <form method="post" action="index.php" dir="ltr">
                             <div class="form-group">
                               <label>Title</label>
                               <input type="text" name="title" class="form-control">

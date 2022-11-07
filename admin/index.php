@@ -63,7 +63,7 @@ else {
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
-        <a href="http://localhost:8000/" type="button" class="btn btn-primary float-right" target="_blank">View <i class="fas fa-eye" style="font-size: 12px;"></i></a>
+        <a href="http://localhost/php" type="button" class="btn btn-primary float-right" target="_blank">View <i class="fas fa-eye" style="font-size: 12px;"></i></a>
       </li>
     </ul>
   </nav>
@@ -91,13 +91,12 @@ else {
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
+            <form action="search.php" method="post">
+                <input class="form-control form-control-sidebar" name="id" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-sidebar btn-block">
+                    <i class="fas fa-search fa-fw"></i>
+                </button>
+            </form>
         </div>
       </div>
       <!-- /.sidebar-menu -->
