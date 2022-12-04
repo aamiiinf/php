@@ -71,7 +71,7 @@ $book = new Book;
                         <img src="assets/img/book.jpg" class="img-fluid" alt="">
                         <div class="gallery-links d-flex align-items-center justify-content-center">
                             <a href="assets/img/book.jpg" title="Gallery 1" class="glightbox preview-link"><?php echo $value['title']; ?></a>
-                            <a href="single.php?action=edit&id=<?php echo $value['id'] ?>" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                            <a href="single.php?action=view&id=<?php echo $value['id'] ?>" class="details-link"><i class="bi bi-link-45deg"></i></a>
                         </div>
                     </div>
                 </div><!-- End Gallery Item -->

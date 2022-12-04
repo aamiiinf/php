@@ -4,7 +4,6 @@ $book = new Book;
 $result = [];
 
 if (!empty($_GET['action'])  && $_GET['action'] = "view") {
-    die();
     $id = $_GET['id'];
     $result = $book->getOne($id);
     ?>

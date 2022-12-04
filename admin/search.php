@@ -15,7 +15,6 @@ if ($conn->connect_error) {
 
 $sql = "SELECT title,description,writer,genre,price FROM book WHERE title  =$title";
 $result = $conn->query($sql);
-
 if ($result->num_rows > 0) {
     ?>
 <div class="card">
@@ -38,18 +37,17 @@ if ($result->num_rows > 0) {
                 <span class="handle">
                       <i class="fas fa-book"></i>
                 </span>
-<!--                <span class="text"> --><?php //echo $row['title']; ?><!--</span>-->
                     <?php
                         while ($row = $result->fetch_assoc()) {
-                            echo "<br/>" . "<b>title: </b>" . $row["title"]
-                                . "<br/>" . "<b>description: </b>" . $row["description"]
-                                . "<br/>" . "<b>description: </b>" . $row["writer"]
-                                . "<br/>" . "<b>description: </b>" . $row["genre"]
-                                . "<br/>" . "<b>description: </b>" . $row["price"] ;
+                                echo "<br/>" . "<b>title: </b>" . $row["title"]
+                                    . "<br/>" . "<b>description: </b>" . $row["description"]
+                                    . "<br/>" . "<b>description: </b>" . $row["writer"]
+                                    . "<br/>" . "<b>description: </b>" . $row["genre"]
+                                    . "<br/>" . "<b>description: </b>" . $row["price"];
                         }
                     } else {
-                        echo "0 results";
-                    }?>
+                        echo "<p>Nothing found</p>";
+                    } ?>
             </li>
         </ul>
     </div>

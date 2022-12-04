@@ -1,69 +1,74 @@
 <?php
-require_once("header.php"); 
+require_once("header.php");
+require_once("Book.php");
+$book = new Book;
+$titleErr = $descriptionErr = $writerErr = $genreErr = $priceErr = "";
+$title = $description = $writer = $genre = $price = "";
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $valid = true;
+    if (empty($_POST["title"])) {
+        $valid = false;
+        $titleErr = "title is required";
+    } else {
+        $title = init_input($_POST["title"]);
+    }
+
+    if (empty($_POST["description"])) {
+        $valid = false;
+        $descriptionErr = "description is required";
+    } else {
+        $description = init_input($_POST["description"]);
+    }
+
+    if (empty($_POST["writer"])) {
+        $valid = false;
+        $writerErr = "writer is empty";
+    } else {
+        $writer = init_input($_POST["writer"]);
+    }
+
+    if (empty($_POST["genre"])) {
+        $valid = false;
+        $genreErr = "genre is empty";
+    } else {
+        $genre = init_input($_POST["genre"]);
+    }
+
+    if (empty($_POST["price"])) {
+        $valid = false;
+        $priceErr = "price is required";
+    } else {
+        $price = init_input($_POST["price"]);
+        if (!preg_match("/^[0-9]+$/i", $price)) {
+            $valid = false;
+            $priceErr = 'Invalid Number!';
+            $error    = 1;
+        }
+    }
+    if($valid){
+        $book->setTitle($title);
+        $book->setDescription($description);
+        $book->setWriter($writer);
+        $book->setGenre($genre);
+        $book->setPrice($price);
+
+        $book->insertData();
+        echo "<script>alert('records UPDATED successfully')</script>";
+        header("Refresh: 0.1;url=http://localhost/book/admin/index.php");
+        exit();
+    }
+}
+
+function init_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 ?>
 
-<div class="wrapper">
-
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
-
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <button type="button" class="btn btn-primary float-right">View <i class="fas fa-eye" style="font-size: 12px;"></i></button>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">PSCR Books</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/1.png" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Amin Foladi PSCR</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+<?php require_once("sidebar.php") ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -109,32 +114,38 @@ require_once("header.php");
                     <div class="card-header"><strong>Add New Book</strong> <a href="index.php" class="float-right btn btn-dark btn-sm">Books List<i class="fa fa-fw fa-globe"></i></a></div>
                       <div class="card-body">
                         <div class="col">
-                          <form method="post" action="index.php" dir="ltr">
+                          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" dir="ltr">
                             <div class="form-group">
                               <label>Title</label>
-                              <input type="text" name="title" class="form-control">
+                              <input type="text" name="title" class="form-control" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+                                <span style="color: red;"><?php echo $titleErr;?></span>
                             </div>
-                  
+
                             <div class="form-group">
                               <label>Description</label>
-                              <input type="text" name="description" class="form-control" style="height: 100px">
+                              <input type="text" name="description" class="form-control"
+                                     value="<?php echo isset($_POST['description']) ? $_POST['description'] : '' ?>" style="height: 100px">
+                                <span style="color: red;"><?php echo $descriptionErr;?></span>
                             </div>
-                  
+
                             <div class="form-group">
                               <label>Writer</label>
-                              <input type="text" name="writer" class="form-control">
-                            </div>    
+                              <input type="text" name="writer" class="form-control" value="<?php echo isset($_POST['writer']) ? $_POST['writer'] : '' ?>">
+                                <span style="color: red;"><?php echo $writerErr;?></span>
+                            </div>
 
                             <div class="form-group">
                               <label>Genre</label>
-                              <input type="text" name="genre" class="form-control">
+                              <input type="text" name="genre" class="form-control" value="<?php echo isset($_POST['genre']) ? $_POST['genre'] : '' ?>">
+                                <span style="color: red;"><?php echo $genreErr;?></span>
                             </div>
 
                             <div class="form-group">
                               <label>Praice</label>
-                              <input type="text" name="price" class="form-control">
+                              <input type="text" name="price" class="form-control" value="<?php echo isset($_POST['price']) ? $_POST['price'] : '' ?>">
+                                <span style="color: red;"><?php echo $priceErr;?></span>
                             </div>
-                  
+
                             <div class="form-group">
                               <button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Create<i class="fa fa-fw fa-plus-circle"></i></button>
                             </div>

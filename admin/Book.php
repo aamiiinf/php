@@ -99,6 +99,30 @@ class Book{
         return $stmt->fetch();
     }
 
+    public function deleteData($id)
+    {
+        $sql = "DELETE FROM $this->table WHERE id=:id";
+        $stmt = DB::prepareOwn($sql);
+
+        $stmt->bindParam(":id", $id);
+        return $stmt->execute();
+    }
+
+    public function deleteAll()
+    {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "books_db";
+
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "DELETE FROM book";
+            $conn->exec($sql);
+
+        $conn = null;
+    }
+
 
 }
 
