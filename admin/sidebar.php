@@ -1,3 +1,13 @@
+<?php
+require_once "db_admin_conction.php";
+
+?>
+<style>
+    .user-panel img {
+        height: 35px;
+        width: 35px;
+    }
+</style>
 <div class="wrapper">
 
   <!-- Preloader -->
@@ -37,14 +47,11 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/1.png" class="img-circle elevation-2" alt="User Image">
+            <img src="<?php echo $row['file']; ?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="edit-user.php" class="d-block">
-                <?php
-                require_once "db_admin_conction.php";
-                echo $row['name'];
-                ?>
+              <?php echo $row['name']; ?>
           </a>
         </div>
       </div>

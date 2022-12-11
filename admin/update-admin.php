@@ -1,4 +1,5 @@
 <?php
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -9,25 +10,27 @@ $name = $_POST['name'];
 $pass = $_POST['pass'];
 $email = $_POST['email'];
 
+$fileDir= "image/";
+$fileName= $fileDir. basename($_FILES['file']['name']);
+move_uploaded_file($_FILES['file']['tmp_name'], $fileName);
 
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
- //    set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+//    set the PDO error mode to exception
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "UPDATE admin SET name='$name',pass='$pass',email='$email' WHERE $id";
+$sql = "UPDATE admin SET name='$name',pass='$pass',email='$email', file='$fileName' WHERE $id";
 
 
 // Prepare statement
-    $stmt = $conn->prepare($sql);
+$stmt = $conn->prepare($sql);
 
-    // execute the query
-    $stmt->execute();
+// execute the query
+$stmt->execute();
 
-    // echo a message to say the UPDATE succeeded
-    echo "<script>alert('records UPDATED successfully')</script>";
-    header("Refresh: 0.1;url=http://localhost/book/admin/index.php");
-
+echo "<script>alert('records UPDATED successfully')</script>";
+header("Refresh: 0.1;url=http://localhost/book/admin/index.php");
 
 
 $conn = null;
+
 

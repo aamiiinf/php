@@ -68,7 +68,7 @@ $book = new Book;
                 <?php foreach($book->read_index() as $key=>$value):?>
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="gallery-item h-100">
-                        <img src="assets/img/book.jpg" class="img-fluid" alt="">
+                        <img src="admin/image/<?php echo $value['file']; ?>" class="img-fluid" alt="">
                         <div class="gallery-links d-flex align-items-center justify-content-center">
                             <a href="assets/img/book.jpg" title="Gallery 1" class="glightbox preview-link"><?php echo $value['title']; ?></a>
                             <a href="single.php?action=view&id=<?php echo $value['id'] ?>" class="details-link"><i class="bi bi-link-45deg"></i></a>

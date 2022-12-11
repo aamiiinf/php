@@ -54,6 +54,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error    = 1;
         }
     }
+
+    $file = basename($_FILES['file']['name']);
+    $fileDir= "image/";
+    $fileName= $fileDir. basename($_FILES['file']['name']);
+    move_uploaded_file($_FILES['file']['tmp_name'], $fileName);
+
     if($valid){
         $id = $_POST['id'];
         $book->setTitle($title);
@@ -61,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $book->setWriter($writer);
         $book->setGenre($genre);
         $book->setPrice($price);
+        $book->setFile($file);
         $book->UpdateData($id);
         echo "<script>alert('records Update successfully')</script>";
         header("Refresh: 0.1;url=http://localhost/book/admin/index.php");
@@ -189,38 +196,41 @@ function init_input($data) {
                     <div class="card-header"><strong>Edit Book</strong> <a href="index.php" class="float-right btn btn-dark btn-sm">Books List<i class="fa fa-fw fa-globe"></i></a></div>
                       <div class="card-body">
                         <div class="col">
-                          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" dir="ltr">
+                          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" dir="ltr" enctype="multipart/form-data">
                               <input type="hidden" name="id" value="<?php echo $result['id']; ?>" >
                           <div class="form-group">
                               <label>Title</label>
-                              <input type="text" name="title" class="form-control" value="<?php echo isset($_POST['title']) ? $_POST['title'] : $result['title']; ?>">
+                              <input type="text" name="title" class="form-control" value="<?php echo isset($_POST['title']) ? $_POST['title'] : $result['title']; ?>" required>
                               <span style="color: red;"><?php echo $titleErr;?></span>
                             </div>
 
                             <div class="form-group">
                               <label>Description</label>
-                                <input type="text" name="description" class="form-control" style="height: 100px" value="<?php echo isset($_POST['description']) ? $_POST['description'] : $result['description']; ?>">
+                                <input type="text" name="description" class="form-control" style="height: 100px" value="<?php echo isset($_POST['description']) ? $_POST['description'] : $result['description']; ?>" required>
                                 <span style="color: red;"><?php echo $descriptionErr;?></span>
                             </div>
 
                             <div class="form-group">
                               <label>Writer</label>
-                              <input type="text" name="writer" class="form-control" value="<?php echo isset($_POST['writer']) ? $_POST['writer'] : $result['writer']; ?>">
+                              <input type="text" name="writer" class="form-control" value="<?php echo isset($_POST['writer']) ? $_POST['writer'] : $result['writer']; ?>" required>
                                 <span style="color: red;"><?php echo $writerErr;?></span>
                             </div>
 
                             <div class="form-group">
                               <label>Genre</label>
-                              <input type="text" name="genre" class="form-control" value="<?php echo isset($_POST['genre']) ? $_POST['genre'] : $result['genre']; ?>">
+                              <input type="text" name="genre" class="form-control" value="<?php echo isset($_POST['genre']) ? $_POST['genre'] : $result['genre']; ?>" required>
                                 <span style="color: red;"><?php echo $genreErr;?></span>
                             </div>
 
                             <div class="form-group">
                               <label>Praice</label>
-                              <input type="text" name="price" class="form-control" value="<?php echo isset($_POST['price']) ? $_POST['price'] : $result['price']; ?>">
+                              <input type="text" name="price" class="form-control" value="<?php echo isset($_POST['price']) ? $_POST['price'] : $result['price']; ?>" required>
                                 <span style="color: red;"><?php echo $priceErr;?></span>
                             </div>
-
+                            <div class="form-group">
+                                <label>Picture</label>
+                                <input type="file" name="file" class="form-control" required>
+                            </div>
                             <div class="form-group">
                               <button type="submit" name="edit" value="submit" id="submit" class="btn btn-primary">Edit Book</button>
                             </div>

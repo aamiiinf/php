@@ -91,7 +91,7 @@ require_once("pag.php");
                   <li>
                     <!-- drag handle -->
                     <span class="handle">
-                      <i class="fas fa-book"></i>
+                      <img src="image/<?php echo $value['file']; ?>" height="100" width="100">
                     </span>
                     <!-- todo text -->
                       <span class="text"> <?php echo $value['title']; ?></span>

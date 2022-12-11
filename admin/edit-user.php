@@ -49,7 +49,7 @@ require_once "db_admin_conction.php";
                                             <div class="card-header"><strong>Edit Admin</strong></div>
                                             <div class="card-body">
                                                 <div class="col">
-                                                    <form method="post" action="update-admin.php" dir="ltr">
+                                                    <form method="post" action="update-admin.php" dir="ltr" enctype="multipart/form-data">
 
                                                         <div class="form-group">
                                                             <input type="hidden" name="id" class="form-control" value="<?php echo $row['id'] ?>">
@@ -58,13 +58,18 @@ require_once "db_admin_conction.php";
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label>Password</label>
+                                                            <label>Full Name</label>
                                                             <input type="text" name="pass" class="form-control" value="<?php echo $row['pass'] ?>" required>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>Email</label>
                                                             <input type="email" name="email" class="form-control" value="<?php echo $row['email'] ?>" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Picture</label>
+                                                            <input type="file" name="file" class="form-control" required>
                                                         </div>
 
                                                         <div class="form-group">

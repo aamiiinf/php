@@ -10,7 +10,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT id, name, pass, email FROM admin";
+$sql = "SELECT id, name, pass, email, file FROM admin";
 $result = mysqli_query($conn, $sql);
 
 $row = mysqli_fetch_assoc($result);

@@ -13,6 +13,7 @@ class Book{
     private $writer;
     private $genre;
     private $price;
+    private $file;
 
 
     public function setTitle($title)
@@ -35,10 +36,14 @@ class Book{
     {
         $this->price = $price;
     }
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
 
     public function insertData()
     {
-        $sql = "INSERT INTO $this->table(title, description, writer, genre, price) VALUES(:title, :description, :writer, :genre, :price)";
+        $sql = "INSERT INTO $this->table(title, description, writer, genre, price, file) VALUES(:title, :description, :writer, :genre, :price, :file)";
         $stmt = DB::prepareOwn($sql);
 
         $stmt->bindParam(":title", $this->title);
@@ -46,6 +51,7 @@ class Book{
         $stmt->bindParam(":writer", $this->writer);
         $stmt->bindParam(":genre", $this->genre);
         $stmt->bindParam(":price", $this->price);
+        $stmt->bindParam(":file", $this->file);
 
         return $stmt->execute();
     }
@@ -76,7 +82,7 @@ class Book{
 
     public function UpdateData($id)
     {
-        $sql = "UPDATE $this->table SET title=:title, description=:description, writer=:writer, genre=:genre, price=:price WHERE id=:id";
+        $sql = "UPDATE $this->table SET title=:title, description=:description, writer=:writer, genre=:genre, price=:price, file=:file WHERE id=:id";
         $stmt = DB::prepareOwn($sql);
 
         $stmt->bindParam(":title", $this->title);
@@ -84,6 +90,7 @@ class Book{
         $stmt->bindParam(":writer", $this->writer);
         $stmt->bindParam(":genre", $this->genre);
         $stmt->bindParam(":price", $this->price);
+        $stmt->bindParam(":file", $this->file);
         $stmt->bindParam(":id", $id);
 
         return $stmt->execute();
@@ -122,7 +129,6 @@ class Book{
 
         $conn = null;
     }
-
 
 }
 

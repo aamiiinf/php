@@ -3,7 +3,7 @@ require_once("header.php");
 require_once("Book.php");
 $book = new Book;
 $titleErr = $descriptionErr = $writerErr = $genreErr = $priceErr = "";
-$title = $description = $writer = $genre = $price = "";
+$title = $description = $writer = $genre = $price = $file = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $valid = true;
@@ -46,12 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error    = 1;
         }
     }
+    $file = basename($_FILES['file']['name']);
+    $fileDir= "image/";
+    $fileName= $fileDir. basename($_FILES['file']['name']);
+    move_uploaded_file($_FILES['file']['tmp_name'], $fileName);
+
     if($valid){
         $book->setTitle($title);
         $book->setDescription($description);
         $book->setWriter($writer);
         $book->setGenre($genre);
         $book->setPrice($price);
+        $book->setFile($file);
 
         $book->insertData();
         echo "<script>alert('records UPDATED successfully')</script>";
@@ -66,6 +72,7 @@ function init_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+
 ?>
 
 <?php require_once("sidebar.php") ?>
@@ -114,7 +121,7 @@ function init_input($data) {
                     <div class="card-header"><strong>Add New Book</strong> <a href="index.php" class="float-right btn btn-dark btn-sm">Books List<i class="fa fa-fw fa-globe"></i></a></div>
                       <div class="card-body">
                         <div class="col">
-                          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" dir="ltr">
+                          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" dir="ltr" enctype="multipart/form-data">
                             <div class="form-group">
                               <label>Title</label>
                               <input type="text" name="title" class="form-control" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
@@ -145,7 +152,10 @@ function init_input($data) {
                               <input type="text" name="price" class="form-control" value="<?php echo isset($_POST['price']) ? $_POST['price'] : '' ?>">
                                 <span style="color: red;"><?php echo $priceErr;?></span>
                             </div>
-
+                            <div class="form-group">
+                               <label>Picture</label>
+                               <input type="file" name="file" class="form-control" required>
+                            </div>
                             <div class="form-group">
                               <button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Create<i class="fa fa-fw fa-plus-circle"></i></button>
                             </div>
