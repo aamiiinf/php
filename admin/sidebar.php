@@ -47,7 +47,7 @@ require_once "db_admin_conction.php";
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="<?php echo $row['file']; ?>" class="img-circle elevation-2" alt="User Image">
+            <img src="image/avatar/<?php echo $row['file']; ?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="edit-user.php" class="d-block">
@@ -58,8 +58,8 @@ require_once "db_admin_conction.php";
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
-            <form action="search.php" method="post">
-                <input class="form-control form-control-sidebar" name="id" type="search" placeholder="Search" aria-label="Search" required>
+            <form action="search.php" method="get">
+                <input class="form-control form-control-sidebar" name="search" type="text" placeholder="Search" aria-label="Search" required>
                 <button class="btn btn-sidebar btn-block">
                     <i class="fas fa-search fa-fw"></i>
                 </button>

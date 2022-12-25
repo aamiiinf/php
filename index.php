@@ -53,7 +53,7 @@ $book = new Book;
         <div class="row justify-content-center">
             <div class="col-lg-6 text-center">
                 <h2><span>Books</span></h2>
-                <a href="admin/index.php" target="_blank">Go To Admin Page</a>
+                <a href="admin/login_Admin.php" target="_blank">Go To Admin Page</a>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@ $book = new Book;
                         <img src="admin/image/<?php echo $value['file']; ?>" class="img-fluid" alt="">
                         <div class="gallery-links d-flex align-items-center justify-content-center">
                             <a href="assets/img/book.jpg" title="Gallery 1" class="glightbox preview-link"><?php echo $value['title']; ?></a>
-                            <a href="single.php?action=view&id=<?php echo $value['id'] ?>" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                            <a href="single.php?action=view&id=<?php echo $value['id'] ?>" class="details-link"><i class="bi bi-eye-fill"></i></a>
                         </div>
                     </div>
                 </div><!-- End Gallery Item -->

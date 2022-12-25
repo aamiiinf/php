@@ -65,7 +65,7 @@ class Book{
         else {
             $page=1;
         }
-        $per_page_record = 10;
+        $per_page_record = 3;
         $start_from = ($page-1) * $per_page_record;
         $sql = "SELECT * FROM $this->table LIMIT $start_from, $per_page_record";
         $stmt = DB::prepareOwn($sql);

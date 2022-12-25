@@ -46,10 +46,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error    = 1;
         }
     }
-    $file = basename($_FILES['file']['name']);
-    $fileDir= "image/";
-    $fileName= $fileDir. basename($_FILES['file']['name']);
-    move_uploaded_file($_FILES['file']['tmp_name'], $fileName);
+
+    if (empty(basename($_FILES['file']['name']))){
+        $file = "example.jpg";
+    } else {
+        $file = basename($_FILES['file']['name']);
+        $fileDir = "image/";
+        $fileName = $fileDir . basename($_FILES['file']['name']);
+        move_uploaded_file($_FILES['file']['tmp_name'], $fileName);
+    }
 
     if($valid){
         $book->setTitle($title);
@@ -88,8 +93,8 @@ function init_input($data) {
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Dashboard</li>
-              <li class="breadcrumb-item active">Add-Book</li>
+                <li class="breadcrumb-item active"><a href="http://localhost/book/admin/index.php">Dashboard</a></li>
+                <li class="breadcrumb-item active">Add-Book</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -154,7 +159,7 @@ function init_input($data) {
                             </div>
                             <div class="form-group">
                                <label>Picture</label>
-                               <input type="file" name="file" class="form-control" required>
+                               <input type="file" name="file" class="form-control">
                             </div>
                             <div class="form-group">
                               <button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Create<i class="fa fa-fw fa-plus-circle"></i></button>

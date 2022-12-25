@@ -8,7 +8,7 @@ if (! $conn) {
 
 else {
     mysqli_select_db($conn, 'books_db');
-    $per_page_record = 10;
+    $per_page_record = 3;
 
     // Look for a GET variable page if not found default is 1.
     if (isset($_GET["page"])) {

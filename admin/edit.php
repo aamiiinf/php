@@ -1,8 +1,7 @@
 <?php
 require_once("header.php");
 require_once("Book.php");
-
-
+require_once "db_admin_conction.php";
 $book = new Book;
 
 if (isset($_GET['action']) && $_GET['action'] == "edit") {
@@ -11,7 +10,7 @@ if (isset($_GET['action']) && $_GET['action'] == "edit") {
 }
 
 $titleErr = $descriptionErr = $writerErr = $genreErr = $priceErr = "";
-$title = $description = $writer = $genre = $price = "";
+$title = $description = $writer = $genre = $price = $file = "";
 $valid = true;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -55,10 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $file = basename($_FILES['file']['name']);
-    $fileDir= "image/";
-    $fileName= $fileDir. basename($_FILES['file']['name']);
-    move_uploaded_file($_FILES['file']['tmp_name'], $fileName);
+    if (empty(basename($_FILES['file']['name']))){
+        $file = "example.jpg";
+    } else {
+        $file = basename($_FILES['file']['name']);
+        $fileDir = "image/";
+        $fileName = $fileDir . basename($_FILES['file']['name']);
+        move_uploaded_file($_FILES['file']['tmp_name'], $fileName);
+    }
 
     if($valid){
         $id = $_POST['id'];
@@ -84,175 +87,109 @@ function init_input($data) {
 
 ?>
 
-    <div class="wrapper">
-
-        <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-        </div>
-
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a href="http://localhost/book" type="button" class="btn btn-primary float-right" target="_blank">View Books <i class="fas fa-eye" style="font-size: 12px;"></i></a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.navbar -->
-
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a class="brand-link">
-                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">PSCR Books</span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="dist/img/1.png" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="edit-user.php" class="d-block">
-                            <?php
-                            echo "amin";
-                            ?>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    <form action="search.php" method="post">
-                        <input class="form-control form-control-sidebar" name="id" type="search" placeholder="Search" aria-label="Search" required>
-                        <button class="btn btn-sidebar btn-block">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-    </aside>
-
-
-
+<?php require_once("sidebar.php") ?>
 
     <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Edit-Book</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Dashboard</li>
-              <li class="breadcrumb-item active">Edit-Book</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-12 connectedSortable">
-
-
-            <!-- TO DO List -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="ion ion-clipboard mr-1"></i>
-                  Edit Book
-                </h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="container"dir="rtl">
-                  <div class="card my-5">
-                    <div class="card-header"><strong>Edit Book</strong> <a href="index.php" class="float-right btn btn-dark btn-sm">Books List<i class="fa fa-fw fa-globe"></i></a></div>
-                      <div class="card-body">
-                        <div class="col">
-                          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" dir="ltr" enctype="multipart/form-data">
-                              <input type="hidden" name="id" value="<?php echo $result['id']; ?>" >
-                          <div class="form-group">
-                              <label>Title</label>
-                              <input type="text" name="title" class="form-control" value="<?php echo isset($_POST['title']) ? $_POST['title'] : $result['title']; ?>" required>
-                              <span style="color: red;"><?php echo $titleErr;?></span>
-                            </div>
-
-                            <div class="form-group">
-                              <label>Description</label>
-                                <input type="text" name="description" class="form-control" style="height: 100px" value="<?php echo isset($_POST['description']) ? $_POST['description'] : $result['description']; ?>" required>
-                                <span style="color: red;"><?php echo $descriptionErr;?></span>
-                            </div>
-
-                            <div class="form-group">
-                              <label>Writer</label>
-                              <input type="text" name="writer" class="form-control" value="<?php echo isset($_POST['writer']) ? $_POST['writer'] : $result['writer']; ?>" required>
-                                <span style="color: red;"><?php echo $writerErr;?></span>
-                            </div>
-
-                            <div class="form-group">
-                              <label>Genre</label>
-                              <input type="text" name="genre" class="form-control" value="<?php echo isset($_POST['genre']) ? $_POST['genre'] : $result['genre']; ?>" required>
-                                <span style="color: red;"><?php echo $genreErr;?></span>
-                            </div>
-
-                            <div class="form-group">
-                              <label>Praice</label>
-                              <input type="text" name="price" class="form-control" value="<?php echo isset($_POST['price']) ? $_POST['price'] : $result['price']; ?>" required>
-                                <span style="color: red;"><?php echo $priceErr;?></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Picture</label>
-                                <input type="file" name="file" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                              <button type="submit" name="edit" value="submit" id="submit" class="btn btn-primary">Edit Book</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  </div>
-              </div>
-            </div>
-            <!-- /.card -->
-          </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-
-          <!-- right col -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Edit-Book</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item active"><a href="http://localhost/book/admin/index.php">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Edit-Book</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Main row -->
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-12 connectedSortable">
+
+
+                        <!-- TO DO List -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="ion ion-clipboard mr-1"></i>
+                                    Edit Book
+                                </h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="container"dir="rtl">
+                                    <div class="card my-5">
+                                        <div class="card-header"><strong>Edit Book</strong> <a href="index.php" class="float-right btn btn-dark btn-sm">Books List<i class="fa fa-fw fa-globe"></i></a></div>
+                                        <div class="card-body">
+                                            <div class="col">
+                                                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" dir="ltr" enctype="multipart/form-data">
+                                                    <input type="hidden" name="id" value="<?php echo isset($_POST['id']) ? $_POST['id'] : $result['id']; ?>" >
+                                                    <div class="form-group">
+                                                        <label>Title</label>
+                                                        <input type="text" name="title" class="form-control" value="<?php echo isset($_POST['title']) ? $_POST['title'] : $result['title']; ?>">
+                                                        <span style="color: red;"><?php echo $titleErr;?></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Description</label>
+                                                        <input type="text" name="description" class="form-control" style="height: 100px" value="<?php echo isset($_POST['description']) ? $_POST['description'] : $result['description']; ?>">
+                                                        <span style="color: red;"><?php echo $descriptionErr;?></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Writer</label>
+                                                        <input type="text" name="writer" class="form-control" value="<?php echo isset($_POST['writer']) ? $_POST['writer'] : $result['writer']; ?>">
+                                                        <span style="color: red;"><?php echo $writerErr;?></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Genre</label>
+                                                        <input type="text" name="genre" class="form-control" value="<?php echo isset($_POST['genre']) ? $_POST['genre'] : $result['genre']; ?>">
+                                                        <span style="color: red;"><?php echo $genreErr;?></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Praice</label>
+                                                        <input type="text" name="price" class="form-control" value="<?php echo isset($_POST['price']) ? $_POST['price'] : $result['price']; ?>">
+                                                        <span style="color: red;"><?php echo $priceErr;?></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Picture</label>
+                                                        <input type="file" name="file" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" name="edit" value="submit" id="submit" class="btn btn-primary">Edit Book</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <!-- /.card -->
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+        <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <?php require_once("footer.php"); ?>
+    </div>
+    <!-- /.content-wrapper -->
+<?php require_once("footer.php"); ?>

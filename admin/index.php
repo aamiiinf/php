@@ -6,7 +6,7 @@ $book = new Book;
 
 require_once("pag.php");
 
-    ?>
+?>
 
 <?php require_once("sidebar.php") ?>
 
