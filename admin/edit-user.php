@@ -1,28 +1,23 @@
 <?php
 require_once("header.php");
 require_once "db_admin_conction.php";
-?>
+require_once("function.php");
+session_start();
 
-<?php require_once("sidebar.php") ?>
+if( !isset($_SESSION["user"]) ){
+
+    header("Refresh: 0.1;url=http://localhost/book/admin/login_Admin.php");
+    exit;
+} else {
+
+    ?>
+
+    <?php require_once("sidebar.php") ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Edit-Admin</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active"><a href="http://localhost/book/admin/index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Edit-Admin</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
+        <?php echo content_header("Edit Admin"); ?>
         <!-- /.content-header -->
 
         <!-- Main content -->
@@ -103,7 +98,8 @@ require_once "db_admin_conction.php";
     <!-- /.content -->
     </div>
 
-<?php
-require_once("footer.php");
-mysqli_close($conn);
+    <?php
+    require_once("footer.php");
+    mysqli_close($conn);
+}
 ?>

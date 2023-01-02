@@ -2,6 +2,8 @@
 require_once("header.php");
 require_once("Book.php");
 require_once "db_admin_conction.php";
+require_once("function.php");
+
 $book = new Book;
 
 if (isset($_GET['action']) && $_GET['action'] == "edit") {
@@ -84,7 +86,13 @@ function init_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+session_start();
 
+if( !isset($_SESSION["user"]) ){
+
+    header("Refresh: 0.1;url=http://localhost/book/admin/login_Admin.php");
+    exit;
+} else {
 ?>
 
 <?php require_once("sidebar.php") ?>
@@ -92,21 +100,7 @@ function init_input($data) {
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Edit-Book</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active"><a href="http://localhost/book/admin/index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Edit-Book</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
+        <?php echo content_header("Edit Book"); ?>
         <!-- /.content-header -->
 
         <!-- Main content -->
@@ -192,4 +186,4 @@ function init_input($data) {
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-<?php require_once("footer.php"); ?>
+<?php require_once("footer.php");} ?>

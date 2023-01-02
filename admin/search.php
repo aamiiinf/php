@@ -15,6 +15,13 @@ if ($conn->connect_error) {
 
 $sql = "SELECT * FROM book WHERE `title` LIKE '%" . $searchInput . "%' OR `description` LIKE '%" . $searchInput . "%'";
 $result = $conn->query($sql);
+session_start();
+
+if( !isset($_SESSION["user"]) ){
+    header("Refresh: 0.1;url=http://localhost/book/admin/login_Admin.php");
+    exit;
+} else {
+
 if ($result->num_rows > 0) {
     ?>
     <style>
@@ -61,3 +68,4 @@ if ($result->num_rows > 0) {
 <?php
 $conn->close();
 require_once("footer.php");
+}
